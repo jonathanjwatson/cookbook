@@ -1,4 +1,6 @@
 import express, { Application, Request, Response } from "express";
+import sequelizeConnection from "./db/config";
+import dbInit from "./db/init";
 
 const app: Application = express();
 
@@ -12,7 +14,15 @@ app.get("/", async (req: Request, res: Response): Promise<Response> => {
 
 try {
     app.listen(port, () => {
-        console.log(`Server running on http://localhost:${port}`)
+        console.log(`Server running on http://localhost:${port}`);
+        try {
+            sequelizeConnection.authenticate();
+            console.log("Connection established successfully.");
+            dbInit();
+        } catch (err) {
+            console.log(err);
+        }
+
     })
 } catch (error) {
     if (error instanceof Error) {
