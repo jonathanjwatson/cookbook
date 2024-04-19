@@ -1,8 +1,8 @@
-import Ingredient from "./models/Ingredient";
+import models from "./models/index";
 
 const isDev = process.env.NODE_ENV === "development";
 
 const dbInit = () => {
-    Ingredient.sync({ alter: isDev })
-}
+    models.Ingredient.sync({ alter: isDev });
+};
 export default dbInit;
